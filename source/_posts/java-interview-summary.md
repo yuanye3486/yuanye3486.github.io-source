@@ -373,6 +373,8 @@ categories: [java]
   - 并行是指两个或者多个事件在同一时刻发生
   - 并发是指两个或多个事件在同一时间间隔发生
 
+
+
 ### 创建线程的方式及实现
   - 继承 Thread 类
   - 实现 Runnable 接口
@@ -1013,6 +1015,27 @@ categories: [java]
 ### 常见的单例模式以及各种实现方式的优缺点，哪一种最好，手写常见的单利模式
 ### 设计模式在实际场景中的应用
 ### Spring 中用到了哪些设计模式
+  + 简单工厂模式
+    - BeanFactory ：根据传入一个唯一的标识来获得Bean对象，但是否是在传入参数后创建还是传入参数前创建这个要根据具体情况来定。
+  + 工厂方法模式
+    - FactoryBean
+  + 单例模式
+    Spring中的单例模式提供了全局的访问点BeanFactory，但没有从构造器级别去控制单例，这是因为Spring管理的是任意的Java对象。
+  + 适配器模式
+    - 将一个类的接口转换成客户希望的另外一个接口。Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。
+    Spring中在对于AOP的处理中有Adapter模式的例子
+  + 代理模式
+    Spring的Proxy模式在aop中有体现，比如JdkDynamicAopProxy和Cglib2AopProxy
+  + 观察者模式（Observer）
+    Spring中Observer模式常用的地方是listener的实现。如 ApplicationListener。
+  + 策略模式
+    - 加载不同资源文件时。比如：ClassPathResourece，FileSystemResource，ServletContextResource，UrlResource 但他们都有共同的接口 Resource。
+    - AOP 的实现，采用了两种不同的方式，JDK动态代理和CGLIB代理；
+    - Spring 的事务管理。
+      PlatformTransactionManager 代表事务管理接口，但是它不知道底层如何管理事务，它只要求事务管理提供开始事务(getTransaction(),commit(),rollback()三个方法，但是如何实现则交给具体实现类来完成--不同的实现类代表不同的事务管理策略，spring 事务管理下面主要针对: JDBC,Hibernate,JTA,JPA 四种具体的底层事务控制来包装的。
+  + 模板方法
+    定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。Template Method使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。Template Method模式一般是需要继承的。这里想要探讨另一种对Template Method的理解。Spring中的JdbcTemplate，在用这个类时并不想去继承这个类，因为这个类的方法太多，但是我们还是想用到JdbcTemplate已有的稳定的、公用的数据库连接，那么我们怎么办呢？我们可以把变化的东西抽出来作为一个参数传入JdbcTemplate的方法中。但是变化的东西是一段代码，而且这段代码会用到JdbcTemplate中的变量。怎么办？那我们就用回调对象吧。在这个回调对象中定义一个操纵JdbcTemplate中变量的方法，我们去实现这个方法，就把变化的东西集中到这里了。然后我们再传入这个回调对象到JdbcTemplate，从而完成了调用。这可能是Template Method不需要继承的另一种实现方式吧。
+
 ### MyBatis 中用到了哪些设计模式
 ### 你项目中有使用哪些设计模式
 ### 说说常用开源框架中设计模式使用分析
